@@ -39,5 +39,10 @@ namespace Kursovaya
         {
             this.Close();
         }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
