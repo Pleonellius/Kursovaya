@@ -28,12 +28,22 @@ namespace Kursovaya
             index_selected_ima = dataGridView1.SelectedCells[1].RowIndex.ToString();
             index_selected_special = dataGridView1.SelectedCells[2].RowIndex.ToString();
             index_selected_staj = dataGridView1.SelectedCells[3].RowIndex.ToString();
-            index_selected_kabinet = dataGridView1.SelectedCells[5].RowIndex.ToString();
+            index_selected_kabinet = dataGridView1.SelectedCells[4].RowIndex.ToString();
             //ID конкретной записи в Базе данных, на основании индекса строки
             id_selected_ima = dataGridView1.Rows[Convert.ToInt32(index_selected_ima)].Cells[1].Value.ToString();
             id_selected_special = dataGridView1.Rows[Convert.ToInt32(index_selected_special)].Cells[2].Value.ToString();
             id_selected_staj = dataGridView1.Rows[Convert.ToInt32(index_selected_staj)].Cells[3].Value.ToString();
-            id_selected_kabinet = dataGridView1.Rows[Convert.ToInt32(index_selected_kabinet)].Cells[5].Value.ToString();
+            id_selected_kabinet = dataGridView1.Rows[Convert.ToInt32(index_selected_kabinet)].Cells[4].Value.ToString();
+            string variable = id_selected_ima;
+            string ae = id_selected_special;
+            string ue = id_selected_staj;
+            string vae = id_selected_kabinet;
+            //Класс SomeClass объявлен в файле Program.cs, в нём объявлено простое поле. Наша задача, присвоить этому полю значение, 
+            //а в другой форме его вытащить.
+            SomeClass.variable_class = variable;
+            SomeClass.new_inserted_id = ae;
+            SomeClass.new_inserted_mainOrder_id = ue;
+            SomeClass.aeee = vae;
         }
         public Form1()
         {
@@ -104,7 +114,7 @@ namespace Kursovaya
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            
             // строка подключения к БД
             string connStr = "server=caseum.ru;port=33333;user=st_2_1_19;database=st_2_1_19;password=68201560;";
             // создаём объект для подключения к БД
@@ -202,17 +212,7 @@ namespace Kursovaya
         {
             if (dataGridView1.CurrentRow.Selected == true)
             {
-                //Объявляем переменную для передачи значения в другую форму
-                string variable = id_selected_ima;
-                string ae = id_selected_special;
-                string ue = id_selected_staj;
-                string vae = id_selected_kabinet;
-                //Класс SomeClass объявлен в файле Program.cs, в нём объявлено простое поле. Наша задача, присвоить этому полю значение, 
-                //а в другой форме его вытащить.
-                SomeClass.variable_class = variable;
-                SomeClass.new_inserted_id = ae;
-                SomeClass.new_inserted_mainOrder_id = ue;
-                SomeClass.aeee = vae;
+                GetSelectedIDString();
                 Form5 frm = new Form5();
                 frm.ShowDialog();
 
