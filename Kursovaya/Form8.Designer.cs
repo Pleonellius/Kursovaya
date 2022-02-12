@@ -42,7 +42,7 @@ namespace Kursovaya
             this.textBox1.Location = new System.Drawing.Point(29, 33);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(162, 20);
-            this.textBox1.TabIndex = 0;
+            this.textBox1.TabIndex = 1;
             // 
             // textBox2
             // 
@@ -102,6 +102,7 @@ namespace Kursovaya
             this.Controls.Add(this.textBox1);
             this.Name = "Form8";
             this.Text = "Form8";
+            this.Load += new System.EventHandler(this.Form8_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

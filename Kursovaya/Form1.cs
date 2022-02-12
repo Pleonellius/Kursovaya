@@ -13,6 +13,28 @@ namespace Kursovaya
 {
     public partial class Form1 : Form
     {
+        string id_selected_ima;
+        string id_selected_special;
+        string id_selected_staj;
+        string id_selected_kabinet;
+        public void GetSelectedIDString()
+        {
+            //Переменная для индекс выбранной строки в гриде
+            string index_selected_ima;
+            string index_selected_special;
+            string index_selected_staj;
+            string index_selected_kabinet;
+            //Индекс выбранной строки
+            index_selected_ima = dataGridView1.SelectedCells[1].RowIndex.ToString();
+            index_selected_special = dataGridView1.SelectedCells[2].RowIndex.ToString();
+            index_selected_staj = dataGridView1.SelectedCells[3].RowIndex.ToString();
+            index_selected_kabinet = dataGridView1.SelectedCells[5].RowIndex.ToString();
+            //ID конкретной записи в Базе данных, на основании индекса строки
+            id_selected_ima = dataGridView1.Rows[Convert.ToInt32(index_selected_ima)].Cells[1].Value.ToString();
+            id_selected_special = dataGridView1.Rows[Convert.ToInt32(index_selected_special)].Cells[2].Value.ToString();
+            id_selected_staj = dataGridView1.Rows[Convert.ToInt32(index_selected_staj)].Cells[3].Value.ToString();
+            id_selected_kabinet = dataGridView1.Rows[Convert.ToInt32(index_selected_kabinet)].Cells[5].Value.ToString();
+        }
         public Form1()
         {
             InitializeComponent();
@@ -37,7 +59,7 @@ namespace Kursovaya
         public void GetListUsers()
         {
             //Запрос для вывода строк в БД
-            string commandStr = "SELECT id AS 'Код', IMAVraha AS 'ФИО', Special AS 'Специальность', staj AS 'Стаж', obrazovanie AS 'Образование' FROM Vrahi";
+            string commandStr = "SELECT IMAVraha AS 'ФИО', Special AS 'Специальность', staj AS 'Стаж', obrazovanie AS 'Образование', kabinet AS 'Кабинет' FROM Vrahi";
             //Открываем соединение
             conn.Open();
             //Объявляем команду, которая выполнить запрос в соединении conn
@@ -82,6 +104,7 @@ namespace Kursovaya
 
         private void Form1_Load(object sender, EventArgs e)
         {
+           
             // строка подключения к БД
             string connStr = "server=caseum.ru;port=33333;user=st_2_1_19;database=st_2_1_19;password=68201560;";
             // создаём объект для подключения к БД
@@ -89,29 +112,22 @@ namespace Kursovaya
             //Вызываем метод для заполнение дата Грида
             GetListUsers();
             //Видимость полей в гриде
-            dataGridView1.Columns[0].Visible = true;
             dataGridView1.Columns[1].Visible = true;
             dataGridView1.Columns[2].Visible = true;
             dataGridView1.Columns[3].Visible = true;
-            dataGridView1.Columns[4].Visible = true;
             //Ширина полей
-            dataGridView1.Columns[0].FillWeight = 15;
             dataGridView1.Columns[1].FillWeight = 40;
             dataGridView1.Columns[2].FillWeight = 15;
             dataGridView1.Columns[3].FillWeight = 15;
-            dataGridView1.Columns[4].FillWeight = 15;
             //Режим для полей "Только для чтения"
-            dataGridView1.Columns[0].ReadOnly = true;
             dataGridView1.Columns[1].ReadOnly = true;
             dataGridView1.Columns[2].ReadOnly = true;
             dataGridView1.Columns[3].ReadOnly = true;
-            dataGridView1.Columns[4].ReadOnly = true;
             //Растягивание полей грида
-            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
             //Убираем заголовки строк
             dataGridView1.RowHeadersVisible = false;
             //Показываем заголовки столбцов
@@ -178,7 +194,29 @@ namespace Kursovaya
 
         private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
         {
+           
             bSource.Filter = "[Специальность] LIKE'" + toolStripTextBox1.Text + "%'";
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow.Selected == true)
+            {
+                //Объявляем переменную для передачи значения в другую форму
+                string variable = id_selected_ima;
+                string ae = id_selected_special;
+                string ue = id_selected_staj;
+                string vae = id_selected_kabinet;
+                //Класс SomeClass объявлен в файле Program.cs, в нём объявлено простое поле. Наша задача, присвоить этому полю значение, 
+                //а в другой форме его вытащить.
+                SomeClass.variable_class = variable;
+                SomeClass.new_inserted_id = ae;
+                SomeClass.new_inserted_mainOrder_id = ue;
+                SomeClass.aeee = vae;
+                Form5 frm = new Form5();
+                frm.ShowDialog();
+
+            }
         }
     }
 }

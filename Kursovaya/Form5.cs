@@ -16,5 +16,23 @@ namespace Kursovaya
         {
             InitializeComponent();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Form5_Load(object sender, EventArgs e)
+        {
+            label1.Text = SomeClass.variable_class;
+            label2.Text=SomeClass.new_inserted_id;
+            label3.Text=SomeClass.new_inserted_mainOrder_id;
+            label9.Text=SomeClass.aeee;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
